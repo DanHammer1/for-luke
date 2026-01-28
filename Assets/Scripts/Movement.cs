@@ -16,7 +16,6 @@ public class Movement : MonoBehaviour
         {
             Rigidbody2D rigidbody = transform.GetComponent<Rigidbody2D>();
             rigidbody.linearVelocity = new Vector3(-1, 0, 0);
-            rigidbody.linearVelocity = new Vector3(0, 0, 0);
         }
         if (Input.GetKey("d"))
         {
