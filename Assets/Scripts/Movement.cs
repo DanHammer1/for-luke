@@ -2,36 +2,54 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    Vector3 velocity;
+    Vector3 lastFramePosition;
+    Rigidbody2D rigidbody;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        transform.position = new Vector3(2, 0, 0);
+        transform.position = new Vector3(-1.5f, -1.5f, 0);
+        rigidbody = transform.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update()
+    
+    
+    void CheckInput()
     {
+        Rigidbody2D rigidbody = transform.GetComponent<Rigidbody2D>();
 
         if (Input.GetKey("a"))
         {
-            Rigidbody2D rigidbody = transform.GetComponent<Rigidbody2D>();
-            rigidbody.linearVelocity = new Vector3(-1, 0, 0);
+            velocity = new Vector3(-30f, 0, 0);  
         }
+
         if (Input.GetKey("d"))
         {
-            transform.position += new Vector3(1 * Time.deltaTime, 0, 0);
+            velocity = new Vector3(30f, 0, 0);
         }
 
         if (Input.GetKey("w"))
         {
-            transform.position += new Vector3(0, 1 * Time.deltaTime, 0);
+            velocity = new Vector3(0, 30f, 0);
         }
 
         if (Input.GetKey("s"))
         {
-            transform.position += new Vector3(0, -1 * Time.deltaTime, 0);
+            velocity = new Vector3(0, -30f, 0);
+        }
+    }
+    void FixedUpdate()
+    {
+        if ((transform.position - lastFramePosition).magnitude <= 0.01f)
+        {
+            CheckInput();
         }
 
+        lastFramePosition = transform.position;
 
+        rigidbody.AddForce(velocity);
     }
 }
+
